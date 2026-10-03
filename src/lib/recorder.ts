@@ -44,7 +44,7 @@ export function recordUtterance(
     proc.onaudioprocess = (e) => {
       const d = e.inputBuffer.getChannelData(0);
       let sum = 0;
-      for (let i = 0; i < d.length; i++) sum += d[i] * d[i];
+      for (let i = 0; i < d.length; i++) { const x = d[i] ?? 0; sum += x * x; }
       const rms = Math.sqrt(sum / d.length);
       opts.onLevel?.(Math.min(1, rms * 12));
       const loud = rms > 0.02;
@@ -84,7 +84,7 @@ function encodeWav(chunks: Float32Array[], rate: number): string {
   const outLen = Math.floor(len / ratio);
   const pcm = new Int16Array(outLen);
   for (let i = 0; i < outLen; i++) {
-    const s = Math.max(-1, Math.min(1, all[Math.floor(i * ratio)]));
+    const s = Math.max(-1, Math.min(1, all[Math.floor(i * ratio)] ?? 0));
     pcm[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
   }
   const buf = new ArrayBuffer(44 + pcm.length * 2);
