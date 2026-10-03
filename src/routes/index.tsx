@@ -33,9 +33,20 @@ const INITIAL: MealState = {
   time: "8:00 pm",
   diet: "vegetarian",
   criteria: [],
-  kitchen: [],
+  kitchen: [
+    { item: "paneer", state: "AVAILABLE", note: "200g in fridge" },
+    { item: "palak", state: "AVAILABLE", note: "fresh bunch" },
+    { item: "aloo", state: "AVAILABLE", note: "" },
+    { item: "gobi", state: "LOW", note: "half a head" },
+    { item: "dal", state: "AVAILABLE", note: "toor + moong" },
+    { item: "rice", state: "AVAILABLE", note: "" },
+    { item: "onion", state: "AVAILABLE", note: "" },
+    { item: "tomato", state: "LOW", note: "2 left" },
+    { item: "cream", state: "MISSING", note: "" },
+  ],
   procurement: [],
   activeMeal: null,
+  lastMeal: "Dal Tadka & Rice",
 };
 
 type Meal = { name: string; needs: string[]; tags: string[]; mins: number };
@@ -293,6 +304,11 @@ function Index() {
             </span>
             <span className="font-mono text-[11px] opacity-60">Indiranagar</span>
           </div>
+          {state.lastMeal && (
+            <p className="text-xs text-muted-foreground">
+              Last night: <span className="font-semibold text-foreground">{state.lastMeal}</span> — assistant will avoid repeating it
+            </p>
+          )}
 
           {step === 1 ? (
             <>

@@ -22,6 +22,7 @@ export type MealState = {
   kitchen: KitchenItem[];
   procurement: ProcItem[];
   activeMeal: string | null;
+  lastMeal: string | null;
 };
 export type ChatMsg = { role: "user" | "assistant"; content: string };
 
@@ -34,6 +35,7 @@ const stateSchema = z.object({
   kitchen: z.array(z.object({ item: z.string(), state: z.string(), note: z.string() })),
   procurement: z.array(z.object({ item: z.string(), state: z.string() })),
   activeMeal: z.string().nullable(),
+  lastMeal: z.string().nullable(),
 });
 
 const turnInput = z.object({
@@ -117,6 +119,7 @@ Speaker role: manager
 Meal: ${s.mealType} at ${s.time}, diet: ${s.diet}
 Number of diners: ${s.diners}
 Active meal: ${s.activeMeal ?? "not chosen yet"}
+Last night's meal: ${s.lastMeal ?? "not recorded"} (avoid suggesting the same meal again tonight unless the user asks for it)
 Selected meal intent criteria: ${s.criteria.join(", ") || "none"}
 Allowed criteria values (use EXACTLY these strings): ${CRITERIA.join(" | ")}
 Kitchen Memory:
