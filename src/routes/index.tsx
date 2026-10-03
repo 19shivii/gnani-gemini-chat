@@ -437,8 +437,8 @@ function Index() {
                       className="flex items-start gap-2 rounded-xl border border-warn-border bg-warn px-3 py-2 text-sm font-semibold text-warn-foreground"
                     >
                       <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
-                      <span className="capitalize">
-                        {k.item} reported {k.state.toLowerCase()}
+                      <span>
+                        <span className="capitalize">{k.item}</span> reported {k.state.toLowerCase()}
                         {k.note ? ` (${k.note})` : ""}
                       </span>
                     </div>
